@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: Python application
+name: Platformio build
 
 on:
   push:
@@ -25,7 +25,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -U platformio
         platformio update
-        sudo apt install libncurses5-dev flex bison
     - name: Compile project using platformio
       run: |
         # Need to run this twice to grab and index the libraries, currently this is a bodge.
