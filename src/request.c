@@ -67,17 +67,13 @@ void https_get_task(void *pvParameters)
   char *title = NULL;
   char *alt = NULL;
   int num;
-  //char *title = "Hurricane Hunters";
-  //char *alt   = "Our flight gathered valuable data on whether a commercial airliner in the eye of a hurricane can do a loop.";
-  //int num = 2353;
-
 
   while(1) {
     ESP_LOGI(TAG, "Starting request!");
     DEV_Module_Init();
     EPD_7IN5_V2_Init();
     ESP_LOGI(TAG, "Initialize display");
-    static int request_count = 0;
+    int request_count = 0;
     ret = get_xkcd_metadata(&image_url, &title, &alt, &num);
 
     if(!ret)
@@ -243,7 +239,7 @@ void draw_centered_text(unsigned char *canvas,
                         int            y)
 {
     sFONT font = Font12;
-    int font_byte_width = font.Width % 8 ? font.Width/8 + 1 : font.Width/8;
+    int font_byte_width = (font.Width % 8) ? (font.Width/8 + 1) : (font.Width/8);
     int text_width = MAX_TEXT_WIDTH;
 
     ESP_LOGI(TAG, "str_len: %d text_width: %d", str_len, text_width);
@@ -333,7 +329,7 @@ void init_screen(pngle_t *pngle, uint32_t w, uint32_t h)
   // NOTE: this roughly centers the text as the draw_centered_text function avoids breaking up words
   // TODO: Maybe break this word-wrapping out of the draw_centered_text function.
   int lines = strlen(metadata->alt_text)/MAX_TEXT_WIDTH;
-  lines += strlen(metadata->alt_text)%MAX_TEXT_WIDTH ? 1 : 0;
+  lines += (strlen(metadata->alt_text)%MAX_TEXT_WIDTH) ? 1 : 0;
 
   // Draw the Alt-text under the comic
   draw_centered_text(metadata->canvas,
