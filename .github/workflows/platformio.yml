@@ -20,13 +20,13 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-    - name: Install platformio
+    - name: Install platformio & dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -U platformio
         platformio update
+        sudo apt install libncurses5-dev flex bison
     - name: Compile project using platformio
       run: |
         # Need to run this twice to grab and index the libraries, currently this is a bodge.
-        platformio run
-        platformio run
+        if ! $(platformio run); then platformio run; fi
