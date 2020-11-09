@@ -27,5 +27,4 @@ jobs:
         platformio update
     - name: Compile project using platformio
       run: |
-        # Need to run this twice to grab and index the libraries, currently this is a bodge.
-        if ! $(platformio run); then platformio run; fi
+        platformio run
